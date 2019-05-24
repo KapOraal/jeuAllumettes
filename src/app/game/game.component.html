@@ -1,18 +1,20 @@
-<div class="text-center mt-3">
-    <h1>
-        Le jeu des allumettes
-    </h1>
+<div class="text-center mt-3" style="margin-bottom: 40px">
+    <div class="card">
+        <div class="card-header">
+            Le jeu des allumettes
+        </div>
+    </div>
 </div>
 
 <div *ngIf="!started">
 
-    <div class="card-header-custom" style="margin-bottom: 20px">Choix des joueurs</div>
+    <div class="card-header-custom" style="margin-bottom: 20px">Choice of players</div>
 
     <div class="card-deck">
         <div class="card text-center">
             <div class="card-block">
                 <div class="card-header text-center">
-                    Choose Player one
+                    Choose Player 1
                 </div>
                 <div class="card-body">
                     <div class="row mt-4">
@@ -48,29 +50,43 @@
         </div>
     </div>
 
+    <div class="card text-center" style="margin-top: 20px">
+        <div class="card-header">
+            Choix du nombre d'allumettes
+        </div>
 
-    <div class="jumbotron mt-5 p-5">
-        <h2 class="mt-0 mb-4">Choix du nombre d'allumettes :</h2>
-        <input type="number" [(ngModel)]="nbMatches" class="form-control" value="" min="4" max="100" required />
+        <div class="card-body">
+            <div class="row">
+                <h5 class="card-title" style="margin-left: 20px">Nombre d'allumettes pour le jeu</h5>
+                <input type="number" style="margin-left: 20px" [(ngModel)]="nbMatches" class="form-control" value=""
+                    min="4" max="100" required />
+            </div>
+        </div>
+
     </div>
 
-    <div class="jumbotron mt-5 p-4 text-center">
-        <button class="btn btn-lg btn-primary" (click)="startParty()" [disabled]="listPlayer.length != 2">Commencer la partie</button>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success center-block  " style="margin-top:20px" (click)="startParty()"
+            [disabled]="listPlayer.length != 2">Commencer la
+            partie</button>
     </div>
+
 </div>
 
 <div *ngIf="started" class="jumbotron mt-4">
     <div *ngIf="listMatch.length > 0">
-        <div class="h5">Celui qui prend la dernière allumette remporte la partie !</div>
+        <div class="h5">Whoever takes the last match wins the game!</div>
         <div class="h3">C'est au tour de <strong>{{ this.currentPlayer.name }}</strong> : </div>
         <div *ngIf="listMatch.length > 0">
-            <div *ngFor="let match of listMatch; let i = index" class="match-icon" [ngClass]="{'selected': match.selected}" (mouseover)="isSelectable(i)" (click)="removeMatches()"></div>
+            <div *ngFor="let match of listMatch; let i = index" class="match-icon"
+                [ngClass]="{'selected': match.selected}" (mouseover)="isSelectable(i)" (click)="removeMatches()"></div>
         </div>
     </div>
     <div *ngIf="listMatch.length == 0">
         <div class="h2">Résultat :</div>
         <div class="text-center mt-4">
-            <div class="alert alert-success h2 p-5 mb-5">{{ this.currentPlayer.name }} a gagné la partie ! ({{ this.currentPlayer.nbVictory }} victoire(s))</div>
+            <div class="alert alert-success h2 p-5 mb-5">{{ this.currentPlayer.name }} a gagné la partie !
+                ({{ this.currentPlayer.nbVictory }} victoire(s))</div>
             <hr class="mb-5">
             <button class="btn btn-lg btn-primary mr-3" (click)="restartGame()">Faire la revanche ?</button>
             <button class="btn btn-lg btn-info" (click)="resetGame()">Recommencer une nouvelle partie ?</button>
