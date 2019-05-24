@@ -33,14 +33,6 @@ export class GameComponent implements OnInit {
 
     // Subscribe to the service for the list of players
     this._gameService.getPlayers().subscribe(res => this.listPlayer = res);
-
-    // DATA TEST FOR CONFIG PARTY;
-    // this.listPlayer = [
-    //   {nbVictory: 0, name: "Joueur 1"},
-    //   {nbVictory: 0, name: "Joueur 2"}
-    // ];
-    // this.nbMatches = 21;
-    // this.startParty();
   }
 
   // Action triggered when player are defined also as the number of matches
