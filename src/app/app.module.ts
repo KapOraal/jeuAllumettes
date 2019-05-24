@@ -1,22 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { GameComponent } from './game/game.component';
 import { PlayerFormComponent } from './player-form/player-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
     GameComponent,
     PlayerFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [GameComponent]
 })
 export class AppModule { }
