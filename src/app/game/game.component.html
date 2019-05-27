@@ -78,7 +78,7 @@
 
     </div>
 
-    <div *ngIf="started" class="jumbotron mt-4">
+    <!-- <div *ngIf="started" class="jumbotron mt-4">
         <div *ngIf="listMatch.length > 0">
             <div class="h5">Whoever takes the last match wins the game!</div>
             <div class="h3">It's the turn of <strong>{{ this.currentPlayer.name }}</strong> : </div>
@@ -94,6 +94,38 @@
                 <button class="btn btn-lg btn-primary mr-3" (click)="restartGame()">Make the revanch ?</button>
                 <button class="btn btn-lg btn-info" (click)="resetGame()">Start a new game ?</button>
             </div>
+        </div>
+    </div> -->
+
+    <div *ngIf="started" class="card text-center" style="margin-top: 20px; margin-top: 200px">
+        <div *ngIf="listMatch.length > 0">
+            <div class="card-body text-center">
+                <div class="row">
+                    <h5 class="card-title" style="margin-left: 20px">Whoever takes the last match wins the game!</h5>
+                </div>
+                <div class="row">
+                    <h5 class="card-title" style="margin-left: 40px">It's the turn of {{ this.currentPlayer.name }} : </h5>
+                </div>
+                <br>
+                <br>
+                <div class="row" *ngIf="listMatch.length > 0" style="margin-left: 400px">
+                    <div *ngFor="let match of listMatch; let i = index" class="match-icon" [ngClass]="{'selected': match.selected}" (mouseover)="isSelectable(i)" (click)="removeMatches()"></div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+        <div *ngIf="listMatch.length == 0">
+            <br>
+            <div class="h2">Result :</div>
+            <div class="text-center mt-4">
+                <div class="alert alert-success h2 p-5 mb-5">{{ this.currentPlayer.name }} won the game ! ({{ this.currentPlayer.nbVictory }} victoire(s))</div>
+
+                <button class="btn btn-lg btn-primary mr-3" (click)="restartGame()">Make the revanch ?</button>
+                <button class="btn btn-lg btn-info" (click)="resetGame()">Start a new game ?</button>
+            </div>
+            <br>
+            <br>
         </div>
     </div>
 </div>
