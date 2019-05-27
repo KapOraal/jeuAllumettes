@@ -1,95 +1,99 @@
-<div class="text-center mt-3" style="margin-bottom: 40px">
-    <div class="card">
-        <div class="card-header">
+<div class="container">
+    <div class="text-center mt-3" style="margin-bottom: 40px">
+        <div class="card">
+            <div class="card-header">
                 The game of matches
-        </div>
-    </div>
-</div>
-
-<div *ngIf="!started">
-
-    <div class="card-header-custom" style="margin-bottom: 20px">Choice of players</div>
-
-    <div class="card-deck">
-        <div class="card text-center">
-            <div class="card-block">
-                <div class="card-header text-center">
-                    Choose Player 1
-                </div>
-                <div class="card-body">
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <app-player-form></app-player-form>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    Player 1
-                </div>
-
-            </div>
-        </div>
-
-        <div class="card text-center">
-            <div class="card-block">
-                <div class="card-header text-center">
-                    Choose Player 2
-                </div>
-                <div class="card-body">
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <app-player-form></app-player-form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-footer">
-                    Player 2
-                </div>
             </div>
         </div>
     </div>
 
-    <div class="card text-center" style="margin-top: 20px">
-        <div class="card-header">
+    <div *ngIf="!started">
+
+        <div class="card-header-custom" style="margin-bottom: 20px">Choice of players</div>
+
+        <div class="card-deck">
+            <div class="card text-center">
+                <div class="card-block">
+                    <div class="card-header text-center">
+                        Choose Player 1
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <app-player-form></app-player-form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        Player 1
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card text-center">
+                <div class="card-block">
+                    <div class="card-header text-center">
+                        Choose Player 2
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <app-player-form></app-player-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        Player 2
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-center" style="margin-top: 20px">
+            <div class="card-header">
                 Choice of the number of matches
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <h5 class="card-title" style="margin-left: 20px">Number of matches for the game</h5>
+                    <input type="number" style="margin-left: 20px;" [(ngModel)]="nbMatches" class="form-control" value="" min="4" max="100" required />
+                    <div class="alert alert-info" style="margin-left: 20px; margin-top: 20px">
+                        <strong>Info!</strong> The number of matches must be greater than 4 to start the game.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                Number of matches
+            </div>
+
         </div>
 
-        <div class="card-body">
-            <div class="row">
-                <h5 class="card-title" style="margin-left: 20px">Number of matches for the game</h5>
-                <input type="number" style="margin-left: 20px" [(ngModel)]="nbMatches" class="form-control" value=""
-                    min="4" max="100" required />
+        <div class="col-md-12 text-center">
+            <button class="btn btn-success center-block  " style="margin-top:20px" (click)="startParty()" [disabled]="listPlayer.length != 2">Start the game</button>
+        </div>
+
+    </div>
+
+    <div *ngIf="started" class="jumbotron mt-4">
+        <div *ngIf="listMatch.length > 0">
+            <div class="h5">Whoever takes the last match wins the game!</div>
+            <div class="h3">It's the turn of <strong>{{ this.currentPlayer.name }}</strong> : </div>
+            <div *ngIf="listMatch.length > 0">
+                <div *ngFor="let match of listMatch; let i = index" class="match-icon" [ngClass]="{'selected': match.selected}" (mouseover)="isSelectable(i)" (click)="removeMatches()"></div>
             </div>
         </div>
-
-    </div>
-
-    <div class="col-md-12 text-center">
-        <button class="btn btn-success center-block  " style="margin-top:20px" (click)="startParty()"
-            [disabled]="listPlayer.length != 2">Commencer la
-            partie</button>
-    </div>
-
-</div>
-
-<div *ngIf="started" class="jumbotron mt-4">
-    <div *ngIf="listMatch.length > 0">
-        <div class="h5">Whoever takes the last match wins the game!</div>
-        <div class="h3">It's the turn of <strong>{{ this.currentPlayer.name }}</strong> : </div>
-        <div *ngIf="listMatch.length > 0">
-            <div *ngFor="let match of listMatch; let i = index" class="match-icon"
-                [ngClass]="{'selected': match.selected}" (mouseover)="isSelectable(i)" (click)="removeMatches()"></div>
-        </div>
-    </div>
-    <div *ngIf="listMatch.length == 0">
-        <div class="h2">Result :</div>
-        <div class="text-center mt-4">
-            <div class="alert alert-success h2 p-5 mb-5">{{ this.currentPlayer.name }} won the game !
-                ({{ this.currentPlayer.nbVictory }} victoire(s))</div>
-            <hr class="mb-5">
-            <button class="btn btn-lg btn-primary mr-3" (click)="restartGame()">Make the revanch ?</button>
-            <button class="btn btn-lg btn-info" (click)="resetGame()">Start a new game ?</button>
+        <div *ngIf="listMatch.length == 0">
+            <div class="h2">Result :</div>
+            <div class="text-center mt-4">
+                <div class="alert alert-success h2 p-5 mb-5">{{ this.currentPlayer.name }} won the game ! ({{ this.currentPlayer.nbVictory }} victoire(s))</div>
+                <hr class="mb-5">
+                <button class="btn btn-lg btn-primary mr-3" (click)="restartGame()">Make the revanch ?</button>
+                <button class="btn btn-lg btn-info" (click)="resetGame()">Start a new game ?</button>
+            </div>
         </div>
     </div>
 </div>
